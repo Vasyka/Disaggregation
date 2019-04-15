@@ -21,6 +21,76 @@ warnings.simplefilter("ignore")
     - save_to_excel(file_name, rounding="%.3f", **tables) - сохраняет полученные таблицы в выбранный excel-файл
 """
 
+def load_Rosstat_non_sym(path, sheetname, quandrant2_columns = 11, quadrant3_rows = 1):
+    """
+    Чтение данных из таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
+    данные за разные годы лежат в разных файлах.
+
+    Parameters
+    ----------
+    path_and_sheetnames : dictionary with string as key and list as value
+        в качестве ключа используется путь к excel-файлу, а в качестве значения - список номеов\названий страниц в
+        excel-файле
+
+    Returns
+    -------
+    codes : pandas.Series
+        коды отраслей
+    years : list
+        годы за которые приведены таблицы
+    df_d : list of pandas dataframes
+        таблицы отечественного выпуска
+    df_m : list of pandas dataframes
+        таблицы импортного выпуска
+    """
+
+    # Расположение таблицы и столбцов\строк с названиями в ней
+    vertical_table_start = 3  # положение начала таблицы по вертикали
+    horizontal_table_start = 3  # положение начала таблицы по горизонтали
+    industries_position = slice(horizontal_table_start, -quandrant2_columns)  # положение и размеры части таблицы по
+    # отраслям
+    products_position = slice(vertical_table_start, -quadrant3_rows)  # положение и размеры части таблицы по продуктам
+
+    codes_industries_position = 1  # номер строки в таблице с кодами отраслей
+    codes_products_position = 1  # номер столюца в таблице с кодами продуктов
+    industries_names_position = 0  # номер строки в таблице с названиями колонок
+    products_names_position = 2  # номер столбца в таблице с названиями строк
+
+    # Чтение файла
+    file = pd.ExcelFile(path)
+    df_all = pd.read_excel(file, sheet_name=sheetname)
+
+
+    # Получаем названия отраслей(столбцы) и продуктов(строки)
+    rows = df_all.iloc[vertical_table_start:, products_names_position]
+    columns = df_all.iloc[industries_names_position, horizontal_table_start:]
+
+    products = rows[:-quadrant3_rows]
+    products.name = ""
+    industries = columns[:-quandrant2_columns]
+    industries.name = df_all.columns[0]
+
+
+    # Получаем из таблицы коды отраслей и продуктов
+    codes_industries = df_all.iloc[codes_industries_position, industries_position]
+    codes_products = df_all.iloc[products_position, codes_products_position]
+
+    # Сохраняем 1ый квадрант
+    df = df_all.iloc[products_position, industries_position]
+    df.columns = industries
+    df.index = products
+    df.name = industries.name
+    
+    # Обрезаем большую таблицу и добавляем названия строк\столбцов
+    df_all = df_all.iloc[vertical_table_start:, horizontal_table_start:]
+    df_all.columns = columns
+    df_all.index = rows
+
+
+    table_format = "Rosstat"
+    print("Обрабатываем данные из таблицы в формате " + table_format + " \"" + industries.name + "\"")
+
+    return df, df_all, codes_industries.ravel(), codes_products.ravel()
 
 def load_Rosstat_separated_data(**path_and_sheetnames):
     """
