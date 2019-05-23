@@ -119,7 +119,7 @@ def load_Rosstat_separated_data(**path_and_sheetnames):
     df_d : list of pandas dataframes
         таблицы отечественного выпуска
     df_m : list of pandas dataframes
-        таблицы отечественного выпуска
+        таблицы импортного выпуска
     """
 
     # Расположение таблицы и столбцов\строк с названиями в ней
