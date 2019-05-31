@@ -23,25 +23,32 @@ warnings.simplefilter("ignore")
 
 def load_Rosstat_non_sym(path, sheetname, quandrant2_columns = 11, quadrant3_rows = 1):
     """
-    Чтение данных из таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
-    данные за разные годы лежат в разных файлах.
+    Чтение данных о 1ом квадранте и всей таблицы целиком из несимметричной таблицы Росстата. 
+
 
     Parameters
     ----------
-    path_and_sheetnames : dictionary with string as key and list as value
-        в качестве ключа используется путь к excel-файлу, а в качестве значения - список номеов\названий страниц в
-        excel-файле
-
+    path : string
+        путь к excel-файлу
+    sheetname : string
+        номер\название страницы в excel-файле
+    quandrant2_columns : int
+        число столбцов во 2ом квадранте(справа сверху)
+    quandrant3_rows : int
+        число строк в 3ем квадранте(слева снизу)
+        
     Returns
     -------
-    codes : pandas.Series
+    df : pandas dataframe
+        таблица из 1 квадранта
+    df_all: pandas dataframe
+        таблица целиком
+    codes_industries: numpy.array
         коды отраслей
-    years : list
-        годы за которые приведены таблицы
-    df_d : list of pandas dataframes
-        таблицы отечественного выпуска
-    df_m : list of pandas dataframes
-        таблицы импортного выпуска
+    codes_products: numpy.array
+        коды продуктов
+
+
     """
 
     # Расположение таблицы и столбцов\строк с названиями в ней
@@ -94,7 +101,7 @@ def load_Rosstat_non_sym(path, sheetname, quandrant2_columns = 11, quadrant3_row
 
 def load_Rosstat_separated_data(**path_and_sheetnames):
     """
-    Чтение данных из таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
+    Чтение данных из симметричных таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
     данные за разные годы лежат в разных файлах.
 
     Parameters
@@ -112,7 +119,7 @@ def load_Rosstat_separated_data(**path_and_sheetnames):
     df_d : list of pandas dataframes
         таблицы отечественного выпуска
     df_m : list of pandas dataframes
-        таблицы отечественного выпуска
+        таблицы импортного выпуска
     """
 
     # Расположение таблицы и столбцов\строк с названиями в ней
