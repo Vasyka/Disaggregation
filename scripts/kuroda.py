@@ -55,7 +55,8 @@ def kuroda(G, aa, c, mtype):
 
         for i in range(len(c)):
             for j in range(len(at)):
-                t.add(0.5 * (x[j] / c[i] - at[j] / czero[i]) * (x[j] / c[i] - at[j] / czero[i]) * w[i][j])
+                if c[i] != 0 and czero[i] != 0:
+                    t.add(0.5 * (x[j] / c[i] - at[j] / czero[i]) * (x[j] / c[i] - at[j] / czero[i]) * w[i][j])
 
         model.setObjective(t)
 
