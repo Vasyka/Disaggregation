@@ -6,12 +6,13 @@ import numpy as np
 
 def insd(G, aa, c):
     """
-    Построение таблицы с помощью метода INSD
-
+    Построение таблицы с помощью метода INSD(improved normalized square difference).
+    Решает систему G*x = c, где G - матрица and c - вектор ограничений.
+    
     Parameters
     ----------
     G : np.ndarray
-        матрица линейных ограничений
+        матрица коэффициентов для линейных ограничений
     aa: np.ndarray
         векторизованная базовая матрица
     c: np.ndarray

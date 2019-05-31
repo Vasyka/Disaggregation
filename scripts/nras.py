@@ -4,15 +4,16 @@ import numpy as np
 
 
 
-def nras(G, a, c, accuracy, limit):
+def nras(G, aa, c, accuracy, limit):
     """
     Построение таблицы с помощью метода non_sign_RAS
+    Решает систему G*x = c, где G - матрица and c - вектор ограничений.
 
     Parameters
     ----------
     G : np.ndarray
-        матрица линейных ограничений
-    a: np.ndarray
+        матрица коэффициентов для линейных ограничений
+    aa: np.ndarray
         векторизованная базовая матрица
     c: np.ndarray
         вектор ограничений
@@ -29,7 +30,7 @@ def nras(G, a, c, accuracy, limit):
     counter = 0
 
     try:
-        a = a.astype(float)
+        a = aa.astype(float)
         a[a == 0] = 1e-2
         (quantity_c, n) = G.shape
 

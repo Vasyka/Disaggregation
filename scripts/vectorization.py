@@ -109,7 +109,7 @@ def tovector(a):
         return -1
 
 
-def tomatrix(a, shape):
+def tomatrix(a, shape = None):
     """
     Перевод вектора а в матричную форму размерности shape
 
@@ -118,7 +118,7 @@ def tomatrix(a, shape):
     a: np.ndarray
         исходный вектор
     shape: tuple
-        размерность матрицы
+        размерность матрицы, если не задана, то предполагается, что матрица квадратная
 
     Returns
     -------
@@ -126,6 +126,8 @@ def tomatrix(a, shape):
         матричная форма вектора a
     """
     try:
+        if not shape:
+            shape = int(np.sqrt(len(a))), -1
         return a.reshape((shape[1], shape[0])).T
     except Exception as e:
         logging.error(traceback.format_exc())
