@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="224fbf5f-990b-4d74-af26-75f059e0ad5f" name="Default" comment="test">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Test.ipynb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="224fbf5f-990b-4d74-af26-75f059e0ad5f" name="Default" comment="added demo file">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/insd.py" afterPath="$PROJECT_DIR$/scripts/insd.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/kuroda.py" afterPath="$PROJECT_DIR$/scripts/kuroda.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DisaggregationDemo.ipynb" afterPath="$PROJECT_DIR$/DisaggregationDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/metrics.py" afterPath="$PROJECT_DIR$/scripts/metrics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/nras.py" afterPath="$PROJECT_DIR$/scripts/nras.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vectorization.py" afterPath="$PROJECT_DIR$/scripts/vectorization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,102 +15,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="support.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/support.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="15" lean-forward="true" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vectorization.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/vectorization.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kuroda.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/kuroda.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-                <marker date="1559302604840" expanded="true" signature="108:575" ph="&quot;&quot;&quot;Построение таблицы с помощью метода Kuroda...&quot;&quot;&quot;" />
-                <marker date="1559302604840" expanded="true" signature="584:1767" ph="..." />
-                <marker date="1559302604840" expanded="true" signature="854:1006" ph="..." />
-                <marker date="1559302604840" expanded="true" signature="894:1006" ph="..." />
-                <marker date="1559302604840" expanded="true" signature="1203:1347" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="insd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/insd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="54" lean-forward="true" selection-start-line="14" selection-start-column="54" selection-end-line="14" selection-end-column="54" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="metrics.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="metrics.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/metrics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-328">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="236">
+              <caret line="81" column="30" lean-forward="true" selection-start-line="81" selection-start-column="30" selection-end-line="81" selection-end-column="30" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1559318651557" expanded="true" signature="1566:1636" ph="..." />
-                <marker date="1559318651557" expanded="true" signature="1566:1727" ph="..." />
-                <marker date="1559318651557" expanded="true" signature="1663:1727" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nras.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/nras.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-109">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-                <marker date="1559318962572" expanded="true" signature="675:2119" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="675:2210" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="830:2079" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="871:2045" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="1068:2045" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="1107:1385" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="1411:2045" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="1447:1745" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="1775:2045" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="1817:2045" ph="..." />
-                <marker date="1559318962572" expanded="true" signature="2146:2210" ph="..." />
+                <marker date="1559341786460" expanded="true" signature="1187:1517" ph="..." />
+                <marker date="1559341786460" expanded="true" signature="1528:2251" ph="..." />
               </folding>
             </state>
           </provider>
@@ -144,6 +52,7 @@
         <option value="$PROJECT_DIR$/scripts/support.py" />
         <option value="$PROJECT_DIR$/Test.ipynb" />
         <option value="$PROJECT_DIR$/scripts/insd.py" />
+        <option value="$PROJECT_DIR$/scripts/metrics.py" />
       </list>
     </option>
   </component>
@@ -190,11 +99,6 @@
             <path>
               <item name="Disaggregation" type="b2602c69:ProjectViewProjectNode" />
               <item name="Disaggregation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Disaggregation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Disaggregation" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Disaggregation" type="b2602c69:ProjectViewProjectNode" />
@@ -306,17 +210,37 @@
       <option name="project" value="LOCAL" />
       <updated>1559295128662</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fixed bug in MAPE, added function that prints all metrics">
+      <created>1559319485937</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1559319485937</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added demo file">
+      <created>1559319515938</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1559319515938</updated>
+    </task>
+    <task id="LOCAL-00005" summary="MAPE fix 2">
+      <created>1559328854501</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1559328854501</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="713" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25767368" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3867314" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3867314" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -348,7 +272,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="fixed bug in MAPE, added function that prints all metrics" />
+    <MESSAGE value="added demo file" />
+    <MESSAGE value="MAPE fix 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="MAPE fix 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -393,57 +320,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/hello.py" />
-    <entry file="file://$PROJECT_DIR$/scripts/metrics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-328">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1559318651557" expanded="true" signature="1566:1636" ph="..." />
-            <marker date="1559318651557" expanded="true" signature="1566:1727" ph="..." />
-            <marker date="1559318651557" expanded="true" signature="1663:1727" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
           <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vectorization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/kuroda.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1559302604840" expanded="true" signature="108:575" ph="&quot;&quot;&quot;Построение таблицы с помощью метода Kuroda...&quot;&quot;&quot;" />
-            <marker date="1559302604840" expanded="true" signature="584:1767" ph="..." />
-            <marker date="1559302604840" expanded="true" signature="854:1006" ph="..." />
-            <marker date="1559302604840" expanded="true" signature="894:1006" ph="..." />
-            <marker date="1559302604840" expanded="true" signature="1203:1347" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -478,12 +359,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/kuroda.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1559328995350" expanded="true" signature="108:575" ph="&quot;&quot;&quot;Построение таблицы с помощью метода Kuroda...&quot;&quot;&quot;" />
+            <marker date="1559328995350" expanded="true" signature="584:1819" ph="..." />
+            <marker date="1559328995350" expanded="true" signature="854:1006" ph="..." />
+            <marker date="1559328995350" expanded="true" signature="894:1006" ph="..." />
+            <marker date="1559328995350" expanded="true" signature="1203:1399" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vectorization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/support.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="15" lean-forward="true" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/metrics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="81" column="30" lean-forward="true" selection-start-line="81" selection-start-column="30" selection-end-line="81" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1559341786460" expanded="true" signature="1187:1517" ph="..." />
+            <marker date="1559341786460" expanded="true" signature="1528:2251" ph="..." />
           </folding>
         </state>
       </provider>
