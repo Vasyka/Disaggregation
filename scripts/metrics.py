@@ -28,9 +28,9 @@ def get_values(x, x_true, save = False):
             metric_name = metric[0].upper()
             res = metric[1](x, x_true)
             if save:
-                results[metric_name] = round(res,3)
+                results[metric_name] = round(res,4)
             else:
-                print(metric_name, round(res,3))
+                print(metric_name, round(res,4))
     if save:
         return results
 
@@ -54,8 +54,9 @@ def mape(x, x_true):
     try:
         x = x.flatten()
         x_true = x_true.flatten()
-        x_true[x_true == 0] = 1e+20
-        return (np.sum(abs(x - x_true) / abs(x_true)) / len(x)) * 100
+        size = len(x)
+        errors = [0. if x_true[i] == 0 else abs(x[i] - x_true[i]) / abs(x_true[i]) for i in range(size)]
+        return (np.sum(errors) / size) * 100.
     except Exception as e:
         logging.error(traceback.format_exc())
         return -1
@@ -80,7 +81,7 @@ def wape(x, x_true):
     try:
         x = x.flatten()
         x_true = x_true.flatten()
-        return 100 * 1 / (np.sum(x_true)) * np.sum(abs(x - x_true))
+        return 100. * 1. / (np.sum(x_true)) * np.sum(abs(x - x_true))
     except Exception as e:
         logging.error(traceback.format_exc())
         return -1
