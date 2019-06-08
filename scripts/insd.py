@@ -2,13 +2,13 @@ import logging
 import traceback
 import gurobipy as gr
 import numpy as np
+from scipy.sparse import csr_matrix
 
-
-def insd(G, aa, c):
+def insd(G, aa, c, sparsed=False):
     """
     Построение таблицы с помощью метода INSD(improved normalized square difference).
     Решает систему G*x = c, где G - матрица and c - вектор ограничений.
-    
+
     Parameters
     ----------
     G : np.ndarray
@@ -31,6 +31,7 @@ def insd(G, aa, c):
         a[aa == 0] = 1e-10
 
         at = a.flatten()
+
         x = np.array([model.addVar() for i in at])
         model.update()
 
@@ -39,8 +40,21 @@ def insd(G, aa, c):
             t.add((at[i] - x[i]) * (at[i] - x[i]) / at[i])
         model.setObjective(t)
 
-        for i in range(len(G)):
-            model.addLConstr(gr.LinExpr(G[i, :], x), gr.GRB.EQUAL, c[i])
+        if sparsed:
+            for i in range(G.shape[0]):
+                start = G.indptr[i]
+                end = G.indptr[i + 1]
+                idx = G.indices[start:end]
+                coef = G.data[start:end]
+                variables = x[idx]
+                model.addLConstr(gr.LinExpr(coef, variables), gr.GRB.EQUAL, c[i])
+        else:
+            cover_rows = [np.nonzero(row)[0] for row in G]
+
+            for i in range(len(G)):
+                variables = x[cover_rows[i]]
+                coef = G[i, cover_rows[i]]
+                model.addLConstr(gr.LinExpr(coef, variables), gr.GRB.EQUAL, c[i])
 
         model.setParam('BarConvTol', 1e-8)
         model.setParam('BarQCPConvTol', 1e-6)
