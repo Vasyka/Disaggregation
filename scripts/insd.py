@@ -36,8 +36,9 @@ def insd(G, aa, c, sparsed=False):
         model.update()
 
         t = gr.QuadExpr()
+        dif = (at - x) * (at - x) / at
         for i in range(len(at)):
-            t.add((at[i] - x[i]) * (at[i] - x[i]) / at[i])
+            t.add(dif[i])
         model.setObjective(t)
 
         if sparsed:
