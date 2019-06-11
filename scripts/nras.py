@@ -10,7 +10,7 @@ def nras(G, aa, c, accuracy, limit, sparsed=False):
 
     Parameters
     ----------
-    G : np.ndarray
+    G : np.ndarray или sparse.csr_matrix
         матрица коэффициентов для линейных ограничений
     aa: np.ndarray
         векторизованная базовая матрица
@@ -20,7 +20,8 @@ def nras(G, aa, c, accuracy, limit, sparsed=False):
         допустимая погрешность
     limit: float
         максимальное количество итераций
-
+    sparsed: bool
+        True - входная матрица G в формате sparse.csr_matrix, False - np.ndarray
     Returns
     -------
     a: np.ndarray
