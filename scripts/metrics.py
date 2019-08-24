@@ -158,3 +158,82 @@ def swad(x, x_true):
     except Exception as e:
         logging.error(traceback.format_exc())
         return -1
+    
+def PsiStat(x, x_true):
+    """
+    Получение значения метрики Psi statistic для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    """
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+        
+        s = (x_true + x) / 2
+
+        inf1 = x_true / s
+        loged1 = np.log(inf1)
+        loged1 = np.nan_to_num(loged1) # for nan\inf occasions
+        left = x_true * loged1
+
+        inf2 = x / s
+        loged2 = np.log(inf2)
+        loged2 = np.nan_to_num(loged2) # for nan\inf occasions
+        right = x * loged2
+
+        inform = np.sum(np.sum(left + right))
+        summ = np.sum(np.sum(x_true))
+        psi = inform / summ
+    
+        return psi
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+    
+def RSQ(x, x_true):
+    """
+    Получение значения метрики RSQ(коэффициент детерминации) для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    """
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)   
+        
+        var = x_true - np.mean(np.mean(x_true))
+        TSS = np.sum(np.sum(var * var))
+        e = x_true - x
+        ESS = np.sum(np.sum(e * e))
+        rsqr = 1 - ESS/TSS
+            
+        return rsqr
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+    
