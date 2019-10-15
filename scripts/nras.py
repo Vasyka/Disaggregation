@@ -3,7 +3,7 @@ import traceback
 import numpy as np
 from scipy.sparse import csr_matrix
 
-def nras(G, aa, c, accuracy, limit, sparsed=False):
+def nras(G, aa, c, accuracy = 0.01, limit = 100, sparsed=False):
     """
     Построение таблицы с помощью метода non_sign_RAS
     Решает систему G*x = c, где G - матрица and c - вектор ограничений.

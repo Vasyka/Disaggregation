@@ -25,49 +25,59 @@ def insd(G, aa, c, sparsed=False):
     """
     try:
         model = gr.Model("INSD")
-
         a = aa.astype(float)
 
         a[aa == 0] = 1e-10
-
         at = a.flatten()
-
-        x = np.array([model.addVar() for i in at])
+            
+        # add variable z to model ( z_ij = x_ij/a_ij)
+        z = model.addVars(len(at), lb=0., name='z')
+        for i in range(len(z)):
+            z[i].start = 1.
         model.update()
-
+        
+        # add function for minimization to model
         t = gr.QuadExpr()
-        dif = (at - x) * (at - x) / at
         for i in range(len(at)):
-            t.add(dif[i])
+            t.add(abs(at[i])*(z[i] - 1.)*(z[i] - 1.))
         model.setObjective(t)
-
+    
+        # add constraint G*(z.*a)=c
         if sparsed:
             for i in range(G.shape[0]):
+                expr = gr.LinExpr()
                 start = G.indptr[i]
                 end = G.indptr[i + 1]
                 idx = G.indices[start:end]
-                coef = G.data[start:end]
-                variables = x[idx]
-                model.addLConstr(gr.LinExpr(coef, variables), gr.GRB.EQUAL, c[i])
+                coef = G.data[start:end] * at[idx]
+                
+                for j, k in enumerate(idx):
+                    expr.add(z[k],coef[j])
+                model.addLConstr(expr, gr.GRB.EQUAL, c[i])
         else:
             cover_rows = [np.nonzero(row)[0] for row in G]
 
             for i in range(len(G)):
-                variables = x[cover_rows[i]]
-                coef = G[i, cover_rows[i]]
-                model.addLConstr(gr.LinExpr(coef, variables), gr.GRB.EQUAL, c[i])
-
+                expr = gr.LinExpr()
+                idx = cover_rows[i]
+                coef = G[i, idx] *at[idx]
+                
+                for j, k in enumerate(idx):
+                    expr.add(z[k],coef[j])
+                model.addLConstr(expr, gr.GRB.EQUAL, c[i])
+                
+        # Set params
         model.setParam('BarConvTol', 1e-8)
         model.setParam('BarQCPConvTol', 1e-6)
 
         model.setParam('DualReductions', 0)
-
+        # model.setParam('FeasibilityTol',0.01)                        
         model.setParam('OutputFlag', 0)
 
         model.optimize()
 
         result = np.array([v.x for v in model.getVars()])
-        return result
+        return result * at
     except Exception as e:
         logging.error(traceback.format_exc())
         return -1
