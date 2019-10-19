@@ -1,5 +1,6 @@
 # Excel Files
 *.xlsx
+!results/results.xlsx
 
 # Python cache
 __pycache__/
