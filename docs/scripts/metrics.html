@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>scripts.metrics API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>scripts.metrics</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import logging
+import traceback
+import numpy as np
+from inspect import getmembers, isfunction
+from scripts import vectorization as v
+import sys
+
+def get_values(x, x_true, save = False):
+    &#34;&#34;&#34;
+    Получение значения всех метрик для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+    save: boolean, default False
+        по умолчанию - печать значений метрик, если необходимо сохранить значения (True) - возвращает в виде словаря
+    Returns
+    -------
+    results: dict
+        значения метрик - {название метрики: значение метрики}
+    &#34;&#34;&#34;
+    results = {}
+    spec_functions = [&#39;get_values&#39;,&#39;getmembers&#39;,&#39;isfunction&#39;]
+    for metric in getmembers(sys.modules[__name__], isfunction):
+        if (metric[0] not in spec_functions):
+            metric_name = metric[0].upper()
+            res = metric[1](x, x_true)
+            if save:
+                results[metric_name] = np.round(res,4)
+            else:
+                print(metric_name, np.round(res,4))
+    if save:
+        return results
+    
+
+    
+def mape(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики MAPE для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        
+        
+        # Проверяем число измерений
+        if x_true.ndim == 2:
+            x = v.tovector(x)
+        if x_true.ndim == 2:
+            x_true = v.tovector(x_true)
+
+        errors = [0. if x_true[i] == 0 else abs(x[i] - x_true[i]) / abs(x_true[i]) for i in range(len(x))]
+        errors = np.array(errors, dtype = float)
+        return (np.sum(errors) / len(x)) * 100.
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+
+def wape(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики WAPE для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+
+        diff = abs(x - x_true)
+        s = x_true.sum()
+        
+        return 100. * np.sum(diff) / s
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+
+def N0(x, x_true, eps = 1e-9):
+    &#34;&#34;&#34;
+    Получение значения метрики N0 для таблицы x на основании таблицы x_true -
+    число элементов матрицы, которые нулевые в одной матрице и ненулевые в другой
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        
+        # Проверяем число измерений
+        if x_true.ndim == 2:
+            x = v.tovector(x)
+        if x_true.ndim == 2:
+            x_true = v.tovector(x_true)
+
+        errors = (x_true &lt; eps) != (x &lt; eps)
+        return np.sum(errors)
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+
+def swad(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики SWAD для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+            
+        return np.sum(abs(x_true) * abs(x - x_true)) / np.sum(x_true ** 2)
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+    
+def PsiStat(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики Psi statistic для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+        
+        s = (x_true + x) / 2
+
+        inf1 = x_true / s
+        loged1 = np.log(inf1)
+        loged1 = np.nan_to_num(loged1) # for nan\inf occasions
+        left = x_true * loged1
+
+        inf2 = x / s
+        loged2 = np.log(inf2)
+        loged2 = np.nan_to_num(loged2) # for nan\inf occasions
+        right = x * loged2
+
+        inform = np.sum(np.sum(left + right))
+        summ = np.sum(np.sum(x_true))
+        psi = inform / summ
+    
+        return psi
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+    
+def RSQ(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики RSQ(коэффициент детерминации) для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)   
+        
+        var = x_true - np.mean(np.mean(x_true))
+        TSS = np.sum(np.sum(var * var))
+        e = x_true - x
+        ESS = np.sum(np.sum(e * e))
+        rsqr = 1 - ESS/TSS
+            
+        return rsqr
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1
+    </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="scripts.metrics.N0"><code class="name flex">
+<span>def <span class="ident">N0</span></span>(<span>x, x_true, eps=1e-09)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения метрики N0 для таблицы x на основании таблицы x_true -
+число элементов матрицы, которые нулевые в одной матрице и ненулевые в другой</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>значение метрики</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def N0(x, x_true, eps = 1e-9):
+    &#34;&#34;&#34;
+    Получение значения метрики N0 для таблицы x на основании таблицы x_true -
+    число элементов матрицы, которые нулевые в одной матрице и ненулевые в другой
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        
+        # Проверяем число измерений
+        if x_true.ndim == 2:
+            x = v.tovector(x)
+        if x_true.ndim == 2:
+            x_true = v.tovector(x_true)
+
+        errors = (x_true &lt; eps) != (x &lt; eps)
+        return np.sum(errors)
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1</code></pre>
+</details>
+</dd>
+<dt id="scripts.metrics.PsiStat"><code class="name flex">
+<span>def <span class="ident">PsiStat</span></span>(<span>x, x_true)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения метрики Psi statistic для таблицы x на основании таблицы x_true</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>значение метрики</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PsiStat(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики Psi statistic для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+        
+        s = (x_true + x) / 2
+
+        inf1 = x_true / s
+        loged1 = np.log(inf1)
+        loged1 = np.nan_to_num(loged1) # for nan\inf occasions
+        left = x_true * loged1
+
+        inf2 = x / s
+        loged2 = np.log(inf2)
+        loged2 = np.nan_to_num(loged2) # for nan\inf occasions
+        right = x * loged2
+
+        inform = np.sum(np.sum(left + right))
+        summ = np.sum(np.sum(x_true))
+        psi = inform / summ
+    
+        return psi
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1</code></pre>
+</details>
+</dd>
+<dt id="scripts.metrics.RSQ"><code class="name flex">
+<span>def <span class="ident">RSQ</span></span>(<span>x, x_true)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения метрики RSQ(коэффициент детерминации) для таблицы x на основании таблицы x_true</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>значение метрики</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def RSQ(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики RSQ(коэффициент детерминации) для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)   
+        
+        var = x_true - np.mean(np.mean(x_true))
+        TSS = np.sum(np.sum(var * var))
+        e = x_true - x
+        ESS = np.sum(np.sum(e * e))
+        rsqr = 1 - ESS/TSS
+            
+        return rsqr
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1</code></pre>
+</details>
+</dd>
+<dt id="scripts.metrics.get_values"><code class="name flex">
+<span>def <span class="ident">get_values</span></span>(<span>x, x_true, save=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения всех метрик для таблицы x на основании таблицы x_true</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+<dt><strong><code>save</code></strong> :&ensp;<code>boolean</code>, default <code>False</code></dt>
+<dd>по умолчанию - печать значений метрик, если необходимо сохранить значения (True) - возвращает в виде словаря</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>results</code></strong> :&ensp;<code>dict</code></dt>
+<dd>значения метрик - {название метрики: значение метрики}</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_values(x, x_true, save = False):
+    &#34;&#34;&#34;
+    Получение значения всех метрик для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+    save: boolean, default False
+        по умолчанию - печать значений метрик, если необходимо сохранить значения (True) - возвращает в виде словаря
+    Returns
+    -------
+    results: dict
+        значения метрик - {название метрики: значение метрики}
+    &#34;&#34;&#34;
+    results = {}
+    spec_functions = [&#39;get_values&#39;,&#39;getmembers&#39;,&#39;isfunction&#39;]
+    for metric in getmembers(sys.modules[__name__], isfunction):
+        if (metric[0] not in spec_functions):
+            metric_name = metric[0].upper()
+            res = metric[1](x, x_true)
+            if save:
+                results[metric_name] = np.round(res,4)
+            else:
+                print(metric_name, np.round(res,4))
+    if save:
+        return results</code></pre>
+</details>
+</dd>
+<dt id="scripts.metrics.mape"><code class="name flex">
+<span>def <span class="ident">mape</span></span>(<span>x, x_true)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения метрики MAPE для таблицы x на основании таблицы x_true</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>значение метрики</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mape(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики MAPE для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        
+        
+        # Проверяем число измерений
+        if x_true.ndim == 2:
+            x = v.tovector(x)
+        if x_true.ndim == 2:
+            x_true = v.tovector(x_true)
+
+        errors = [0. if x_true[i] == 0 else abs(x[i] - x_true[i]) / abs(x_true[i]) for i in range(len(x))]
+        errors = np.array(errors, dtype = float)
+        return (np.sum(errors) / len(x)) * 100.
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1</code></pre>
+</details>
+</dd>
+<dt id="scripts.metrics.swad"><code class="name flex">
+<span>def <span class="ident">swad</span></span>(<span>x, x_true)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения метрики SWAD для таблицы x на основании таблицы x_true</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>значение метрики</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def swad(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики SWAD для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+            
+        return np.sum(abs(x_true) * abs(x - x_true)) / np.sum(x_true ** 2)
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1</code></pre>
+</details>
+</dd>
+<dt id="scripts.metrics.wape"><code class="name flex">
+<span>def <span class="ident">wape</span></span>(<span>x, x_true)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Получение значения метрики WAPE для таблицы x на основании таблицы x_true</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_true</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная базовая матрица</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>векторизованная матрица для сравнения ограничений</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>значение метрики</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wape(x, x_true):
+    &#34;&#34;&#34;
+    Получение значения метрики WAPE для таблицы x на основании таблицы x_true
+
+    Parameters
+    ----------
+    x_true: np.ndarray
+        векторизованная базовая матрица
+    x: np.ndarray
+        векторизованная матрица для сравнения ограничений
+
+    Returns
+    -------
+    a: float
+        значение метрики
+    &#34;&#34;&#34;
+    try:
+        # Проверяем число измерений
+        if x.ndim == 1 or x.shape[1] == 1:
+            x = v.tomatrix(x)
+        if x_true.ndim == 1 or x_true.shape[1] == 1:
+            x_true = v.tomatrix(x_true)    
+
+        diff = abs(x - x_true)
+        s = x_true.sum()
+        
+        return 100. * np.sum(diff) / s
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return -1</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="scripts" href="index.html">scripts</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="scripts.metrics.N0" href="#scripts.metrics.N0">N0</a></code></li>
+<li><code><a title="scripts.metrics.PsiStat" href="#scripts.metrics.PsiStat">PsiStat</a></code></li>
+<li><code><a title="scripts.metrics.RSQ" href="#scripts.metrics.RSQ">RSQ</a></code></li>
+<li><code><a title="scripts.metrics.get_values" href="#scripts.metrics.get_values">get_values</a></code></li>
+<li><code><a title="scripts.metrics.mape" href="#scripts.metrics.mape">mape</a></code></li>
+<li><code><a title="scripts.metrics.swad" href="#scripts.metrics.swad">swad</a></code></li>
+<li><code><a title="scripts.metrics.wape" href="#scripts.metrics.wape">wape</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>scripts.support API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>scripts.support</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import re
+import warnings
+from operator import add
+
+import numpy as np
+import pandas as pd
+import timeit
+
+# Отключаем warnings
+warnings.simplefilter(&#34;ignore&#34;)
+
+&#34;&#34;&#34;
+    Методы:
+    -----------
+    - load_Rosstat_separated_data(**path_and_sheetnames) - чтение данных из таблиц Росстата. Таблицы отечественного
+    выпуска и импорта находятся на разных страницах, данные за разные годы лежат в разных файлах.
+    
+    - pack_name(str) - приклеивает к строке годы, к которым относится содержание строки, и если было указано, то год,
+    для которого были пересчитаны цены в таблице
+    - save_to_excel(file_name, rounding=&#34;%.3f&#34;, **tables) - сохраняет полученные таблицы в выбранный excel-файл
+&#34;&#34;&#34;
+
+def load_Rosstat_non_sym(path, sheetname, quandrant2_columns = 11, quadrant3_rows = 1):
+    &#34;&#34;&#34;
+    Чтение данных о 1ом квадранте и всей таблицы целиком из несимметричной таблицы Росстата. 
+
+
+    Parameters
+    ----------
+    path : string
+        путь к excel-файлу
+    sheetname : string
+        номер\название страницы в excel-файле
+    quandrant2_columns : int
+        число столбцов во 2ом квадранте(справа сверху)
+    quandrant3_rows : int
+        число строк в 3ем квадранте(слева снизу)
+        
+    Returns
+    -------
+    df : pandas dataframe
+        таблица из 1 квадранта
+    df_all: pandas dataframe
+        таблица целиком
+    codes_industries: numpy.array
+        коды отраслей
+    codes_products: numpy.array
+        коды продуктов
+
+
+    &#34;&#34;&#34;
+
+    # Расположение таблицы и столбцов\строк с названиями в ней
+    vertical_table_start = 3  # положение начала таблицы по вертикали
+    horizontal_table_start = 3  # положение начала таблицы по горизонтали
+    industries_position = slice(horizontal_table_start, -quandrant2_columns)  # положение и размеры части таблицы по
+    # отраслям
+    products_position = slice(vertical_table_start, -quadrant3_rows)  # положение и размеры части таблицы по продуктам
+
+    codes_industries_position = 1  # номер строки в таблице с кодами отраслей
+    codes_products_position = 1  # номер столюца в таблице с кодами продуктов
+    industries_names_position = 0  # номер строки в таблице с названиями колонок
+    products_names_position = 2  # номер столбца в таблице с названиями строк
+
+    # Чтение файла
+    file = pd.ExcelFile(path)
+    df_all = pd.read_excel(file, sheet_name=sheetname)
+
+
+    # Получаем названия отраслей(столбцы) и продуктов(строки)
+    rows = df_all.iloc[vertical_table_start:, products_names_position]
+    columns = df_all.iloc[industries_names_position, horizontal_table_start:]
+
+    products = rows[:-quadrant3_rows]
+    products.name = &#34;&#34;
+    industries = columns[:-quandrant2_columns]
+    industries.name = df_all.columns[0]
+
+
+    # Получаем из таблицы коды отраслей и продуктов
+    codes_industries = df_all.iloc[codes_industries_position, industries_position]
+    codes_products = df_all.iloc[products_position, codes_products_position]
+
+    # Сохраняем 1ый квадрант
+    df = df_all.iloc[products_position, industries_position]
+    df.columns = industries
+    df.index = products
+    df.name = industries.name
+    
+    # Обрезаем большую таблицу и добавляем названия строк\столбцов
+    df_all = df_all.iloc[vertical_table_start:, horizontal_table_start:]
+    df_all.columns = columns
+    df_all.index = rows
+
+
+    table_format = &#34;Rosstat&#34;
+    print(&#34;Обрабатываем данные из таблицы в формате &#34; + table_format + &#34; \&#34;&#34; + industries.name + &#34;\&#34;&#34;)
+
+    return df, df_all, codes_industries.ravel(), codes_products.ravel()
+
+def load_Rosstat_separated_data(**path_and_sheetnames):
+    &#34;&#34;&#34;
+    Чтение данных из симметричных таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
+    данные за разные годы лежат в разных файлах.
+
+    Parameters
+    ----------
+    path_and_sheetnames : dictionary with string as key and list as value
+        в качестве ключа используется путь к excel-файлу, а в качестве значения - список номеов\названий страниц в
+        excel-файле
+
+    Returns
+    -------
+    codes : pandas.Series
+        коды отраслей
+    years : list
+        годы за которые приведены таблицы
+    df_d : list of pandas dataframes
+        таблицы отечественного выпуска
+    df_m : list of pandas dataframes
+        таблицы импортного выпуска
+    &#34;&#34;&#34;
+
+    # Расположение таблицы и столбцов\строк с названиями в ней
+    vertical_table_position = slice(3, 62)  # положение и размеры таблицы по вертикали
+    horizontal_table_position = slice(3, 69)  # положение и размеры таблицы по горизонтали
+    industries_part_position = slice(3, 62)  # положение и размеры части таблицы с промежуточным потреблением по
+    # горизонтали
+    codes_position = 1  # номер строки в таблице с кодами отраслей
+    columns_names_position = 0  # номер строки в таблице с названиями колонок
+    rows_names_position = 2  # номер столбца в таблице с названиями строк
+
+    years = []  # годы за которые приведены таблицы
+    df_d = []  # таблицы отечественного выпуска
+    df_m = []  # таблицы отечественного выпуска
+
+    for path, sheetnames in path_and_sheetnames.items():
+        file = pd.ExcelFile(path)
+        for i, sheetname in enumerate(sheetnames):
+            df1 = pd.read_excel(file, sheet_name=sheetname)
+
+            # Получаем имена столбцов и строк
+            rows = df1.iloc[vertical_table_position, rows_names_position]
+            rows.name = &#34;&#34;
+            columns = df1.iloc[columns_names_position, horizontal_table_position]
+            columns.name = df1.columns[0]
+
+            # Получаем из таблицы коды отраслей (одинаковые по вертикали и горизонтали)
+            codes = df1.iloc[codes_position, industries_part_position]
+
+            # Сохраняем обрезанную версию таблицы
+            df = df1.iloc[vertical_table_position, horizontal_table_position]
+            df.columns = columns
+            df.index = rows
+            df.name = columns.name
+
+            # Делим таблицы на отечественный выпуск и импорт
+            if not i:
+                df_d.append(df)
+            else:
+                df_m.append(df)
+
+        table_format = &#34;Rosstat&#34;
+        print(&#34;Обрабатываем данные из таблицы в формате &#34; + table_format + &#34; \&#34;&#34; + columns.name + &#34;\&#34;&#34;)
+        years.append(re.search(&#34;\d+&#34;, columns.name).group(0))
+    years = years[0] + &#34;-&#34; + years[1]
+    return codes, years, df_d, df_m
+
+
+def pack_name(str, years, prices_in):
+    &#34;&#34;&#34;
+    Приклеивает к строке годы, к которым относится содержание строки, и если было указано, то год, для которого были
+    пересчитаны цены в таблице
+
+    str : string
+        строка-название таблицы\страницы файла
+    &#34;&#34;&#34;
+    return str + &#34; за &#34; + years + &#34;гг(&#34; + prices_in + &#34;)&#34;
+
+def save_to_excel(file_name, years, codes, rounding=&#34;%.3f&#34;, table_format = &#34;Rosstat&#34;,  **tables):
+    &#34;&#34;&#34;
+    Cохраняет полученные таблицы в выбранный excel-файл постранично
+
+    Parameters
+    ----------
+    file_name: string
+        имя файла
+    rounding: string
+        Формат округления чисел в сохраняемых таблицах.
+        по умолчанию - &#34;%.3f&#34;(до 3 знаков после запятой),
+        для результатов в процентах - &#34;%.1f&#34;(до 1 знака после запятой)
+    tables: dictionary
+        Словарь из названий таблиц и самих таблиц
+
+    &#34;&#34;&#34;
+    #wiod16_flag = &#34;w16&#34; if self.table_format == &#34;WIOD16&#34; else &#34;&#34;
+    writer = pd.ExcelWriter(&#34;./results/&#34; + years + &#34;/&#34; + table_format + &#34;/&#34; + file_name, #+ wiod16_flag + file_name,
+                            engine=&#39;xlsxwriter&#39;)
+    workbook = writer.book
+
+    for table_name, df in tables.items():
+        sheet_name = df.columns.name
+
+        df.to_excel(writer, sheet_name=sheet_name, float_format=rounding, startrow=1, startcol=2,
+                    header=False, index=False)
+
+        worksheet = writer.sheets[sheet_name]
+        worksheet.set_zoom(80)
+        worksheet.set_column(2, len(df.columns) + 1, 23)
+
+        # Add a header format
+        header_format = workbook.add_format({
+            &#39;bold&#39;: True,
+            &#39;text_wrap&#39;: True,
+            &#39;align&#39;: &#39;center&#39;,
+            &#39;valign&#39;: &#39;vcenter&#39;,
+            &#39;fg_color&#39;: &#39;#D7E4BC&#39;,
+            &#39;border&#39;: 1})
+
+        # Add total row formating
+        if any(df.index.values == &#39;Total&#39;):
+            total_format = workbook.add_format({&#39;bold&#39;: True, &#39;fg_color&#39;: &#39;#ffb74d&#39;, &#39;border&#39;: 1})
+            worksheet.write_row(np.shape(df)[0], 2, np.array(df.loc[&#39;Total&#39;, :]), total_format)
+
+        # Add codes &amp; index
+        if len(df.index) &gt; len(codes):
+            codes2 = pd.concat([pd.Series([&#39;&#39;]), pd.DataFrame(codes.tolist())])
+            worksheet.write_column(&#39;A1&#39;, codes2, header_format)
+        worksheet.write_column(&#39;B1&#39;, np.insert(df.index.values, 0, &#39;&#39;), header_format)
+        worksheet.set_column(&#39;B:B&#39;, 45)
+
+        # Add header
+        columns = np.insert(df.columns.values, 0, table_name)
+        for col_num, value in enumerate(columns):
+            worksheet.write(0, col_num + 1, value, header_format)
+        worksheet.set_row(0, 75)
+
+    writer.save()
+    workbook.close()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="scripts.support.load_Rosstat_non_sym"><code class="name flex">
+<span>def <span class="ident">load_Rosstat_non_sym</span></span>(<span>path, sheetname, quandrant2_columns=11, quadrant3_rows=1)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Чтение данных о 1ом квадранте и всей таблицы целиком из несимметричной таблицы Росстата. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>string</code></dt>
+<dd>путь к excel-файлу</dd>
+<dt><strong><code>sheetname</code></strong> :&ensp;<code>string</code></dt>
+<dd>номер\название страницы в excel-файле</dd>
+<dt><strong><code>quandrant2_columns</code></strong> :&ensp;<code>int</code></dt>
+<dd>число столбцов во 2ом квадранте(справа сверху)</dd>
+<dt><strong><code>quandrant3_rows</code></strong> :&ensp;<code>int</code></dt>
+<dd>число строк в 3ем квадранте(слева снизу)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pandas</code> <code>dataframe</code></dt>
+<dd>таблица из 1 квадранта</dd>
+<dt><strong><code>df_all</code></strong> :&ensp;<code>pandas</code> <code>dataframe</code></dt>
+<dd>таблица целиком</dd>
+<dt><strong><code>codes_industries</code></strong> :&ensp;<code>numpy.array</code></dt>
+<dd>коды отраслей</dd>
+<dt><strong><code>codes_products</code></strong> :&ensp;<code>numpy.array</code></dt>
+<dd>коды продуктов</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_Rosstat_non_sym(path, sheetname, quandrant2_columns = 11, quadrant3_rows = 1):
+    &#34;&#34;&#34;
+    Чтение данных о 1ом квадранте и всей таблицы целиком из несимметричной таблицы Росстата. 
+
+
+    Parameters
+    ----------
+    path : string
+        путь к excel-файлу
+    sheetname : string
+        номер\название страницы в excel-файле
+    quandrant2_columns : int
+        число столбцов во 2ом квадранте(справа сверху)
+    quandrant3_rows : int
+        число строк в 3ем квадранте(слева снизу)
+        
+    Returns
+    -------
+    df : pandas dataframe
+        таблица из 1 квадранта
+    df_all: pandas dataframe
+        таблица целиком
+    codes_industries: numpy.array
+        коды отраслей
+    codes_products: numpy.array
+        коды продуктов
+
+
+    &#34;&#34;&#34;
+
+    # Расположение таблицы и столбцов\строк с названиями в ней
+    vertical_table_start = 3  # положение начала таблицы по вертикали
+    horizontal_table_start = 3  # положение начала таблицы по горизонтали
+    industries_position = slice(horizontal_table_start, -quandrant2_columns)  # положение и размеры части таблицы по
+    # отраслям
+    products_position = slice(vertical_table_start, -quadrant3_rows)  # положение и размеры части таблицы по продуктам
+
+    codes_industries_position = 1  # номер строки в таблице с кодами отраслей
+    codes_products_position = 1  # номер столюца в таблице с кодами продуктов
+    industries_names_position = 0  # номер строки в таблице с названиями колонок
+    products_names_position = 2  # номер столбца в таблице с названиями строк
+
+    # Чтение файла
+    file = pd.ExcelFile(path)
+    df_all = pd.read_excel(file, sheet_name=sheetname)
+
+
+    # Получаем названия отраслей(столбцы) и продуктов(строки)
+    rows = df_all.iloc[vertical_table_start:, products_names_position]
+    columns = df_all.iloc[industries_names_position, horizontal_table_start:]
+
+    products = rows[:-quadrant3_rows]
+    products.name = &#34;&#34;
+    industries = columns[:-quandrant2_columns]
+    industries.name = df_all.columns[0]
+
+
+    # Получаем из таблицы коды отраслей и продуктов
+    codes_industries = df_all.iloc[codes_industries_position, industries_position]
+    codes_products = df_all.iloc[products_position, codes_products_position]
+
+    # Сохраняем 1ый квадрант
+    df = df_all.iloc[products_position, industries_position]
+    df.columns = industries
+    df.index = products
+    df.name = industries.name
+    
+    # Обрезаем большую таблицу и добавляем названия строк\столбцов
+    df_all = df_all.iloc[vertical_table_start:, horizontal_table_start:]
+    df_all.columns = columns
+    df_all.index = rows
+
+
+    table_format = &#34;Rosstat&#34;
+    print(&#34;Обрабатываем данные из таблицы в формате &#34; + table_format + &#34; \&#34;&#34; + industries.name + &#34;\&#34;&#34;)
+
+    return df, df_all, codes_industries.ravel(), codes_products.ravel()</code></pre>
+</details>
+</dd>
+<dt id="scripts.support.load_Rosstat_separated_data"><code class="name flex">
+<span>def <span class="ident">load_Rosstat_separated_data</span></span>(<span>**path_and_sheetnames)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Чтение данных из симметричных таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
+данные за разные годы лежат в разных файлах.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>path_and_sheetnames</code></strong> :&ensp;<code>dictionary</code> <code>with</code> <code>string</code> <code>as</code> <code>key</code> <code>and</code> <code>list</code> <code>as</code> <code>value</code></dt>
+<dd>в качестве ключа используется путь к excel-файлу, а в качестве значения - список номеов\названий страниц в
+excel-файле</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>codes</code></strong> :&ensp;<code>pandas.Series</code></dt>
+<dd>коды отраслей</dd>
+<dt><strong><code>years</code></strong> :&ensp;<code>list</code></dt>
+<dd>годы за которые приведены таблицы</dd>
+<dt><strong><code>df_d</code></strong> :&ensp;<code>list</code> of <code>pandas</code> <code>dataframes</code></dt>
+<dd>таблицы отечественного выпуска</dd>
+<dt><strong><code>df_m</code></strong> :&ensp;<code>list</code> of <code>pandas</code> <code>dataframes</code></dt>
+<dd>таблицы импортного выпуска</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_Rosstat_separated_data(**path_and_sheetnames):
+    &#34;&#34;&#34;
+    Чтение данных из симметричных таблиц Росстата. Таблицы отечественного выпуска и импорта находятся на разных страницах,
+    данные за разные годы лежат в разных файлах.
+
+    Parameters
+    ----------
+    path_and_sheetnames : dictionary with string as key and list as value
+        в качестве ключа используется путь к excel-файлу, а в качестве значения - список номеов\названий страниц в
+        excel-файле
+
+    Returns
+    -------
+    codes : pandas.Series
+        коды отраслей
+    years : list
+        годы за которые приведены таблицы
+    df_d : list of pandas dataframes
+        таблицы отечественного выпуска
+    df_m : list of pandas dataframes
+        таблицы импортного выпуска
+    &#34;&#34;&#34;
+
+    # Расположение таблицы и столбцов\строк с названиями в ней
+    vertical_table_position = slice(3, 62)  # положение и размеры таблицы по вертикали
+    horizontal_table_position = slice(3, 69)  # положение и размеры таблицы по горизонтали
+    industries_part_position = slice(3, 62)  # положение и размеры части таблицы с промежуточным потреблением по
+    # горизонтали
+    codes_position = 1  # номер строки в таблице с кодами отраслей
+    columns_names_position = 0  # номер строки в таблице с названиями колонок
+    rows_names_position = 2  # номер столбца в таблице с названиями строк
+
+    years = []  # годы за которые приведены таблицы
+    df_d = []  # таблицы отечественного выпуска
+    df_m = []  # таблицы отечественного выпуска
+
+    for path, sheetnames in path_and_sheetnames.items():
+        file = pd.ExcelFile(path)
+        for i, sheetname in enumerate(sheetnames):
+            df1 = pd.read_excel(file, sheet_name=sheetname)
+
+            # Получаем имена столбцов и строк
+            rows = df1.iloc[vertical_table_position, rows_names_position]
+            rows.name = &#34;&#34;
+            columns = df1.iloc[columns_names_position, horizontal_table_position]
+            columns.name = df1.columns[0]
+
+            # Получаем из таблицы коды отраслей (одинаковые по вертикали и горизонтали)
+            codes = df1.iloc[codes_position, industries_part_position]
+
+            # Сохраняем обрезанную версию таблицы
+            df = df1.iloc[vertical_table_position, horizontal_table_position]
+            df.columns = columns
+            df.index = rows
+            df.name = columns.name
+
+            # Делим таблицы на отечественный выпуск и импорт
+            if not i:
+                df_d.append(df)
+            else:
+                df_m.append(df)
+
+        table_format = &#34;Rosstat&#34;
+        print(&#34;Обрабатываем данные из таблицы в формате &#34; + table_format + &#34; \&#34;&#34; + columns.name + &#34;\&#34;&#34;)
+        years.append(re.search(&#34;\d+&#34;, columns.name).group(0))
+    years = years[0] + &#34;-&#34; + years[1]
+    return codes, years, df_d, df_m</code></pre>
+</details>
+</dd>
+<dt id="scripts.support.pack_name"><code class="name flex">
+<span>def <span class="ident">pack_name</span></span>(<span>str, years, prices_in)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Приклеивает к строке годы, к которым относится содержание строки, и если было указано, то год, для которого были
+пересчитаны цены в таблице</p>
+<p>str : string
+строка-название таблицы\страницы файла</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pack_name(str, years, prices_in):
+    &#34;&#34;&#34;
+    Приклеивает к строке годы, к которым относится содержание строки, и если было указано, то год, для которого были
+    пересчитаны цены в таблице
+
+    str : string
+        строка-название таблицы\страницы файла
+    &#34;&#34;&#34;
+    return str + &#34; за &#34; + years + &#34;гг(&#34; + prices_in + &#34;)&#34;</code></pre>
+</details>
+</dd>
+<dt id="scripts.support.save_to_excel"><code class="name flex">
+<span>def <span class="ident">save_to_excel</span></span>(<span>file_name, years, codes, rounding='%.3f', table_format='Rosstat', **tables)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Cохраняет полученные таблицы в выбранный excel-файл постранично</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_name</code></strong> :&ensp;<code>string</code></dt>
+<dd>имя файла</dd>
+<dt><strong><code>rounding</code></strong> :&ensp;<code>string</code></dt>
+<dd>Формат округления чисел в сохраняемых таблицах.
+по умолчанию - "%.3f"(до 3 знаков после запятой),
+для результатов в процентах - "%.1f"(до 1 знака после запятой)</dd>
+<dt><strong><code>tables</code></strong> :&ensp;<code>dictionary</code></dt>
+<dd>Словарь из названий таблиц и самих таблиц</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_to_excel(file_name, years, codes, rounding=&#34;%.3f&#34;, table_format = &#34;Rosstat&#34;,  **tables):
+    &#34;&#34;&#34;
+    Cохраняет полученные таблицы в выбранный excel-файл постранично
+
+    Parameters
+    ----------
+    file_name: string
+        имя файла
+    rounding: string
+        Формат округления чисел в сохраняемых таблицах.
+        по умолчанию - &#34;%.3f&#34;(до 3 знаков после запятой),
+        для результатов в процентах - &#34;%.1f&#34;(до 1 знака после запятой)
+    tables: dictionary
+        Словарь из названий таблиц и самих таблиц
+
+    &#34;&#34;&#34;
+    #wiod16_flag = &#34;w16&#34; if self.table_format == &#34;WIOD16&#34; else &#34;&#34;
+    writer = pd.ExcelWriter(&#34;./results/&#34; + years + &#34;/&#34; + table_format + &#34;/&#34; + file_name, #+ wiod16_flag + file_name,
+                            engine=&#39;xlsxwriter&#39;)
+    workbook = writer.book
+
+    for table_name, df in tables.items():
+        sheet_name = df.columns.name
+
+        df.to_excel(writer, sheet_name=sheet_name, float_format=rounding, startrow=1, startcol=2,
+                    header=False, index=False)
+
+        worksheet = writer.sheets[sheet_name]
+        worksheet.set_zoom(80)
+        worksheet.set_column(2, len(df.columns) + 1, 23)
+
+        # Add a header format
+        header_format = workbook.add_format({
+            &#39;bold&#39;: True,
+            &#39;text_wrap&#39;: True,
+            &#39;align&#39;: &#39;center&#39;,
+            &#39;valign&#39;: &#39;vcenter&#39;,
+            &#39;fg_color&#39;: &#39;#D7E4BC&#39;,
+            &#39;border&#39;: 1})
+
+        # Add total row formating
+        if any(df.index.values == &#39;Total&#39;):
+            total_format = workbook.add_format({&#39;bold&#39;: True, &#39;fg_color&#39;: &#39;#ffb74d&#39;, &#39;border&#39;: 1})
+            worksheet.write_row(np.shape(df)[0], 2, np.array(df.loc[&#39;Total&#39;, :]), total_format)
+
+        # Add codes &amp; index
+        if len(df.index) &gt; len(codes):
+            codes2 = pd.concat([pd.Series([&#39;&#39;]), pd.DataFrame(codes.tolist())])
+            worksheet.write_column(&#39;A1&#39;, codes2, header_format)
+        worksheet.write_column(&#39;B1&#39;, np.insert(df.index.values, 0, &#39;&#39;), header_format)
+        worksheet.set_column(&#39;B:B&#39;, 45)
+
+        # Add header
+        columns = np.insert(df.columns.values, 0, table_name)
+        for col_num, value in enumerate(columns):
+            worksheet.write(0, col_num + 1, value, header_format)
+        worksheet.set_row(0, 75)
+
+    writer.save()
+    workbook.close()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="scripts" href="index.html">scripts</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="scripts.support.load_Rosstat_non_sym" href="#scripts.support.load_Rosstat_non_sym">load_Rosstat_non_sym</a></code></li>
+<li><code><a title="scripts.support.load_Rosstat_separated_data" href="#scripts.support.load_Rosstat_separated_data">load_Rosstat_separated_data</a></code></li>
+<li><code><a title="scripts.support.pack_name" href="#scripts.support.pack_name">pack_name</a></code></li>
+<li><code><a title="scripts.support.save_to_excel" href="#scripts.support.save_to_excel">save_to_excel</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
