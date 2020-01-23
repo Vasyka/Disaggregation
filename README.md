@@ -1,5 +1,6 @@
 # Disaggregation
 
+- **docs/scripts** - documentation. Read in browser, start reading from index.html
 - **scripts** - source code of the project
 - **data** - folder for tables
 - **DisaggregationDemo.ipynb** - demo file with different methods
